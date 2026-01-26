@@ -2,15 +2,18 @@
 #include "simd_vec8f.hpp"
 
 int main(){
-    simd::Vec8f a(2.0f);
-    simd::Vec8f b(1.0f, 2.0f, 3.0f, 1.0f, 1.2f, 4.0f, 4.5f, 2.0f);
+    alignas(32) float data[8] = {1, 2, 3, 4, 5, 6 ,7, 8};
+    simd::Vec8_32f a(data, simd::aligned);
+    simd::Vec8_32f b(data, simd::aligned);
 
-    simd::Vec8f c = a * b;
+    simd::Vec8_32f c = a * a;
 
     float out[8];
     c.store(out);
+    float sum = c.sum();
 
     for (float f : out)
         std::cout << f << " ";
     std::cout << "\n";
+    std::cout << sum << "\n";
 }
